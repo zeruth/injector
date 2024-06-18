@@ -7,25 +7,19 @@ plugins {
 }
 
 group = "nulled"
-version = "1.0"
+version = "1.4"
 
 repositories{
     mavenCentral()
     mavenLocal()
     maven { url = uri("https://raw.githubusercontent.com/MeteorLite/hosting/main/repo/") }
-    maven {
-        url = uri("https://maven.pkg.github.com/zeruth/logger")
-        credentials {
-            username = System.getenv("USERNAME")
-            password = System.getenv("TOKEN")
-        }
-    }
+    maven { url = uri("https://raw.githubusercontent.com/zeruth/repo/main/") }
 }
 
 gradlePlugin {
     plugins {
         create("injector") {
-            id = "meteor.injector"
+            id = "nulled.injector"
             implementationClass = "nulled.InjectorPlugin"
         }
     }
@@ -47,7 +41,7 @@ dependencies{
         implementation(annotations)
         implementation(fernflower)
     }
-    implementation("nulled:logger:1.0")
+    implementation("nulled:logger:1.2")
     implementation("nulled:annotations:1.0")
 }
 
@@ -67,5 +61,19 @@ publishing {
 kotlin {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_11)
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            val propjectDIr = project.layout.projectDirectory
+            url = uri("file://$propjectDIr/.nulled-repo")
+        }
+    }
+    publications {
+        register<MavenPublication>("maven") {
+            from(components["java"])
+        }
     }
 }

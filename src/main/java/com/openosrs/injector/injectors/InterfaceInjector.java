@@ -34,10 +34,7 @@ public class InterfaceInjector extends AbstractInjector
 	{
 		final String fullName = API_BASE + deobCf.getClassName();
 		if (!inject.getRsApi().hasClass(fullName)) {
-			log.error("[DEBUG] Class {} implements nonexistent interface {}, skipping interface injection",
-					deobCf.getName(),
-					fullName
-			);
+			log.error("[DEBUG] Class " + deobCf.getName() + " implements nonexistent interface " + fullName + ", skipping interface injection");
 			return;
 		}else {
 			log.debug("Injected interface " + fullName + " to " + deobCf.getName());

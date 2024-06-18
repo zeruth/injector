@@ -43,7 +43,7 @@ public class InjectorValidator implements Validator
 				RSApiClass apiC = rsApi.findClass(intf.getName());
 				if (apiC == null)
 				{
-					log.error("{} is rs api type implemented by {} but it doesn't exist in rsapi. wtf", intf, cf.getPoolClass());
+					log.error(intf + " is rs api type implemented by " + cf.getPoolClass() + " but it doesn't exist in rsapi. wtf");
 					++wtf;
 					continue;
 				}
@@ -54,8 +54,7 @@ public class InjectorValidator implements Validator
 
 		String status = wtf > 0 ? WTF : missing > 0 ? ERROR : OK;
 		if (missing > 0) {
-			log.error("RSApiValidator completed. Status [{}] {} overridden methods, {} missing", status,
-					okay, missing);
+			log.error("RSApiValidator completed. Status [" + status + "] " + okay + " overridden methods, " + missing + " missing");
 			for (String s : report) {
 				log.warn(s);
 			}
@@ -77,8 +76,7 @@ public class InjectorValidator implements Validator
 
 			if (clazz.findMethodDeep(apiMethod.getName(), apiMethod.getSignature()) == null)
 			{
-				log.error("Class {} implements interface {} but doesn't implement {}",
-					clazz.getPoolClass(), apiClass.getClazz(), apiMethod.getMethod());
+				log.error("Class " + clazz.getPoolClass() + " implements interface " + apiClass.getClazz() + " but doesn't implement " + apiMethod.getMethod());
 				++missing;
 			}
 			else

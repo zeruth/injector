@@ -60,6 +60,8 @@ public class Injector extends InjectData implements InjectTaskHandler
 		for (String s : report) {
 			log.warn(s);
 		}
+		//the report will stack up sitting in a gradle plugin daemon
+		report.clear();
 		save(injector.getVanilla(), outputFile, OutputMode.JAR);
 	}
 
@@ -99,7 +101,7 @@ public class Injector extends InjectData implements InjectTaskHandler
 
 		injector.inject();
 
-		log.debug("{} {}", name, injector.getCompletionMsg());
+		log.debug(name + " " + injector.getCompletionMsg());
 
 		if (injector instanceof Validator) {
 			validate((Validator) injector);
@@ -121,7 +123,7 @@ public class Injector extends InjectData implements InjectTaskHandler
 
 		transformer.transform();
 
-		log.debug("{} {}", name, transformer.getCompletionMsg());
+		log.debug(name + " " + transformer.getCompletionMsg());
 	}
 
 	private static void save(ClassGroup group, File output, OutputMode mode) {

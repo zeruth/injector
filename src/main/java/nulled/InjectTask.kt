@@ -1,6 +1,7 @@
 package nulled
 
 import com.openosrs.injector.Injector
+import meteor.Logger
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.InputFile
@@ -26,6 +27,8 @@ open class InjectTask : DefaultTask() {
         Injector.mixinsFile = mixins
         Injector.target = target
         Injector.output = output
+        File(System.getProperty("user.home") + "/.meteor/logs/").mkdirs()
+        Logger.logFile = File(System.getProperty("user.home") + "/.meteor/logs/injector.txt")
         Injector.main(null)
     }
 }
