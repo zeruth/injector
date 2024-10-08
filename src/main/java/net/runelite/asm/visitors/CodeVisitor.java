@@ -315,10 +315,17 @@ public class CodeVisitor extends MethodVisitor
 
 		for (Parameter p : method.getParameters())
 		{
-			if (p.getName().equals(name))
-			{
-				p.setLocalVariable(lv);
-				break;
+			if (p.getName() != null) {
+				if (p.getName().equals(name))
+				{
+					p.setLocalVariable(lv);
+					break;
+				}
+			}
+			else {
+				//For whatever reason, android.os.AsyncTask breaks this parameter name check, but it can be safely ignored.
+				if (!method.getClassFile().getSuperName().contains("NetworkTask"))
+					System.out.println("NULL PARAMETER NAME?? - " + method.getClassFile().getClassName() + ":" + method.getName());
 			}
 		}
 	}
